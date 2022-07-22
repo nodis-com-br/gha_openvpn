@@ -17,7 +17,7 @@ runs:
       shell: bash
     - run: echo ${{ inputs.openvpn_config }} | base64 -d | sudo tee /etc/openvpn/client/client.conf > /dev/null
       shell: bash
-    - run: sudo systemctl start openvpn-client@client || journalctl -xefu openvpn-client@client
+    - run: sudo systemctl start openvpn-client@client || (journalctl -xeu openvpn-client@client && exit 1)
       shell: bash
     - run: sudo traceroute -m 2 -T ${{ inputs.validation_ip }}
       shell: bash
